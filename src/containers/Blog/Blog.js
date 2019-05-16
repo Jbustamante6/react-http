@@ -1,56 +1,27 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
+import { Route } from 'react-router-dom';
+
 import './Blog.css';
-
+import Posts from './Posts/Posts';
 
 class Blog extends Component {
-    state = { 
-        posts: [],
-        selectedPostID: null
-    }
-    componentDidMount(){
-        axios.get('/posts')
-        .then(response => {
-            const posts = response.data.slice(0, 4)
-            const updatePosts = posts.map(post => {
-                return {
-                    ...post,
-                    author: 'MAX'
-                }
-            });
-            this.setState({posts: updatePosts});
-        }).catch(error => {
-            console.log(error)
-        });
-    }
-
-    postSelectedHandler = (id) => {
-        this.setState({selectedPostID: id})
-    }
-
     render () {
-        const post = this.state.posts.map(post => {
-            return <Post 
-                key={post.id} 
-                title={post.title}
-                author={post.author} 
-                clicked={() => this.postSelectedHandler(post.id)}/>;
-        }); 
+         
         return (
-            <div>
-                <section className="Posts">
-                    {post}
-                </section>
-                <section>
-                    <FullPost id={this.state.selectedPostID}/>
-                </section>
-                <section>
-                    <NewPost />
-                </section>
+            <div className="Blog">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/new-post">New Post</a></li>
+                        </ul>
+                    </nav>
+                </header>
+                {/* <Route path="/" exact render={() => <h1>Home</h1>}/>
+                <Route path="/" exact render={() => <h1>Home</h1>}/> */}
+                <Route path="/" exact component={Posts}/>
+
             </div>
         );
     }
