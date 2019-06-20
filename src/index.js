@@ -21,6 +21,7 @@ axios.interceptors.request.use(request => {
 axios.interceptors.response.use(response => {
     console.log(response);
     // Edit request config
+    //Coment
     return response;
 }, error => {
     console.log(error);
